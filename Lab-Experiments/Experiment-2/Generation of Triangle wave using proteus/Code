@@ -1,1 +1,32 @@
+ORG 0000H
 
+START:
+
+; Rising slope
+UP:
+    MOV A,#00H
+
+UP1:
+    MOV P1,A
+    ACALL DELAY
+    INC A
+    CJNE A,#0FFH,UP1
+
+; Falling slope
+DOWN:
+    MOV A,#0FFH
+
+DOWN1:
+    MOV P1,A
+    ACALL DELAY
+    DEC A
+    CJNE A,#00H,DOWN1
+
+    SJMP START
+
+DELAY:
+    MOV R7,#20
+D1: DJNZ R7,D1
+    RET
+
+END
