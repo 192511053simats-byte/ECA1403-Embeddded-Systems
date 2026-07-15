@@ -1,1 +1,35 @@
+ORG 0000H
 
+START:
+    MOV DPTR,#SINE_TABLE
+
+MAIN:
+    MOV R0,#32          ; Number of samples
+
+NEXT:
+    CLR A
+    MOVC A,@A+DPTR      ; Read sine value from table
+    MOV P1,A            ; Output to DAC
+    ACALL DELAY
+    INC DPTR
+    DJNZ R0,NEXT
+
+    MOV DPTR,#SINE_TABLE
+    SJMP MAIN
+
+DELAY:
+    MOV R7,#20
+D1:
+    DJNZ R7,D1
+    RET
+
+;-----------------------------
+; 32-point Sine Lookup Table
+;-----------------------------
+SINE_TABLE:
+DB 128,153,177,199,218,234,245,253
+DB 255,253,245,234,218,199,177,153
+DB 128,103,79,57,38,22,11,3
+DB 0,3,11,22,38,57,79,103
+
+END
