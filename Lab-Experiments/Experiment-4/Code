@@ -1,1 +1,48 @@
+ORG 0000H
 
+START:
+    MOV P2,#0C0H     ; Display 0
+    ACALL DELAY
+
+    MOV P2,#0F9H     ; Display 1
+    ACALL DELAY
+
+    MOV P2,#0A4H     ; Display 2
+    ACALL DELAY
+
+    MOV P2,#0B0H     ; Display 3
+    ACALL DELAY
+
+    MOV P2,#099H     ; Display 4
+    ACALL DELAY
+
+    MOV P2,#092H     ; Display 5
+    ACALL DELAY
+
+    MOV P2,#082H     ; Display 6
+    ACALL DELAY
+
+    MOV P2,#0F8H     ; Display 7
+    ACALL DELAY
+
+    MOV P2,#080H     ; Display 8
+    ACALL DELAY
+
+    MOV P2,#090H     ; Display 9
+    ACALL DELAY
+
+    SJMP START        ; Repeat continuously
+
+;-------------------------
+; Delay Subroutine
+;-------------------------
+DELAY:
+    MOV R5,#10
+L1: MOV R4,#180
+L2: MOV R3,#255
+L3: DJNZ R3,L3
+    DJNZ R4,L2
+    DJNZ R5,L1
+    RET
+
+END
