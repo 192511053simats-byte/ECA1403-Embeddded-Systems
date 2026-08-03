@@ -1,0 +1,31 @@
+int Status = 13;   // LED pin
+int sensor = 12;   // PIR sensor output pin
+
+void setup()
+{
+  Serial.begin(9600);
+
+  pinMode(sensor, INPUT);
+  pinMode(Status, OUTPUT);
+}
+
+void loop()
+{
+  int state = digitalRead(sensor);
+
+  Serial.print("Sensor State: ");
+  Serial.println(state);
+
+  if (state == HIGH)
+  {
+    digitalWrite(Status, HIGH);
+    Serial.println("Motion Detected!");
+  }
+  else
+  {
+    digitalWrite(Status, LOW);
+    Serial.println("No Motion");
+  }
+
+  delay(500);
+}
