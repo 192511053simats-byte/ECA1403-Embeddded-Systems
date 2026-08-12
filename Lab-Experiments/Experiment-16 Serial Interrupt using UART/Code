@@ -1,0 +1,42 @@
+#include <reg51.h>
+#include <stdio.h>
+
+void serial_ISR(void) interrupt 4
+{
+    char ch;
+
+    if (RI)
+    {
+        RI = 0;
+        ch = SBUF;
+
+        printf("\r\n>>> INTERRUPT RECEIVED: ");
+        printf("%c\r\n", ch);
+    }
+}
+
+void delay(void)
+{
+    unsigned int i;
+
+    for (i = 0; i < 50000; i++);
+}
+
+void main(void)
+{
+    SCON = 0x50;
+    TMOD = 0x20;
+    TH1 = 0xFD;
+    TR1 = 1;
+
+    ES = 1;
+    EA = 1;
+
+    TI = 1;
+
+    while (1)
+    {
+        printf("Hello World\r\n");
+        delay();
+    }
+}
