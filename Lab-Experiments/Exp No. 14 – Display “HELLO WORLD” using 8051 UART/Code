@@ -1,0 +1,41 @@
+#include <reg51.h>
+#include <stdio.h>
+
+void serial_init(void)
+{
+    SCON = 0x50;       // UART mode 1, 8-bit data, receiver enabled
+    TMOD = 0x20;       // Timer 1, Mode 2, 8-bit auto reload
+    TH1  = 0xFD;       // 9600 baud rate for 11.0592 MHz crystal
+    TR1  = 1;           // Start Timer 1
+    TI   = 1;           // Set transmit interrupt flag
+}
+
+char putchar(char c)
+{
+    SBUF = c;           // Send character
+    while(TI == 0);    // Wait until transmission is complete
+    TI = 0;             // Clear transmit flag
+
+    return c;
+}
+
+void delay(void)
+{
+    unsigned int i, j;
+
+    for(i = 0; i < 200; i++)
+    {
+        for(j = 0; j < 1000; j++);
+    }
+}
+
+void main(void)
+{
+    serial_init();
+
+    while(1)
+    {
+        printf("Hello World!\r\n");
+        delay();
+    }
+}
