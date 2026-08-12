@@ -1,0 +1,22 @@
+#include <reg51.h>
+
+void main(void)
+{
+    unsigned char hexa = 0xCF;
+    unsigned char hundreds;
+    unsigned char tens;
+    unsigned char units;
+    unsigned int decimal;
+
+    decimal = hexa;
+
+    hundreds = decimal / 100;
+    tens = (decimal / 10) % 10;
+    units = decimal % 10;
+
+    P0 = units;
+    P1 = tens;
+    P2 = hundreds;
+
+    while(1);
+}
